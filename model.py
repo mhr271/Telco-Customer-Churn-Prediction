@@ -16,4 +16,4 @@ print(df.head())
 print(df.shape)
 
 y = df["Churn"]
-x = df.drop("churn",axis=1)
+x = df.drop("Churn",axis=1)
