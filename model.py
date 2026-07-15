@@ -24,3 +24,18 @@ df["churn"] = df["churn"].map({"Yes":1,"No":0})
 
 y = df["Churn"]
 x = df.drop("Churn",axis=1)
+
+categorical_cols = x.select_dtypes(include=["object"]).columns
+numerical_cols = x.select_dtypes(include=["number"]).columns
+
+preprocessor = ColumnTransformer(
+    transformer=[
+    ('num',StandardScaler(),numerical_cols)
+    ('cat',OneHotEncoder(handle_unknown='ignore'),categorical_cols)
+    ]
+)
+
+x_train , x_test , y_train , y_test = train_test_split(
+    test_size =0.2 ,
+    random_state= 100 ,
+    stratify = y )
