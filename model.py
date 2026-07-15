@@ -9,7 +9,13 @@ from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 import xgboost as xgb
 from xgboost import XGBClassifier
-
+from sklearn.metrics import (
+    confusion_matrix,
+    accuracy_score,
+    precision_score,
+    f1_score,
+    average_precision_score
+)
 
 df = pd.read_csv('WA_Fn-UseC_-Telco-Customer-Churn.csv')
 print(df.head())
