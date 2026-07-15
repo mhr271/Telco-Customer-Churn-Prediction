@@ -50,16 +50,24 @@ neg, pos = y_train.value_counts()
 scale_pos_weight = neg / pos
 
 lr = Pipeline([
-    ( "preprocess" ,preprocessor),
-    ('model',LogisticRegression(max_iter=1000,class_weight='balanced',random_state=100))
+    ("preprocess", preprocessor),
+    ('model', LogisticRegression(max_iter=1000, class_weight='balanced', random_state=100))
 ])
 
-lr.fit(x_train,y_train)
+lr.fit(x_train, y_train)
 
 lr_y_train_pred = lr.predict(x_train)
-lr_y_test_pred =  lr.predict(x_test)
+lr_y_test_pred = lr.predict(x_test)
 
-lr_train_f1 = f1_score(y_train,lr_y_train_pred)
-lr_train_accuracy =(y_train,lr_y_train_pred)
-lr_train_pr_auc =(y_train,lr_y_train_pred)
-lr_train_confusionmatrix = (y_train,lr_y_train_pred)
+lr_y_train_prob = lr.predict_proba(x_train)[:, 1]
+lr_y_test_prob = lr.predict_proba(x_test)[:, 1]
+
+lr_train_f1 = f1_score(y_train, lr_y_train_pred)
+lr_train_accuracy = accuracy_score(y_train, lr_y_train_pred)
+lr_train_pr_auc = average_precision_score(y_train, lr_y_train_prob)
+lr_train_confusionmatrix = confusion_matrix(y_train, lr_y_train_pred)
+
+lr_test_f1 = f1_score(y_test, lr_y_test_pred)
+lr_test_accuracy = accuracy_score(y_test, lr_y_test_pred)
+lr_test_pr_auc = average_precision_score(y_test, lr_y_test_prob)
+lr_test_confusionmatrix = confusion_matrix(y_test, lr_y_test_pred)
