@@ -74,6 +74,24 @@ lr_test_confusionmatrix = confusion_matrix(y_test, lr_y_test_pred)
 
 rf = Pipeline([
  ('preprocess',preprocessor),
- ('scale',StandardScaler()),
  ('model',RandomForestClassifier(n_estimators=300,class_weight='balanced',random_state=100))
 ])
+
+rf.fit(x_train,y_train)
+
+rf_y_train_pred = rf.predict(x_train)
+rf_y_test_pred = rf.predict(x_test)
+
+rf_y_train_prob = rf.predict_proba(x_train)[:, 1]
+rf_y_test_prob = rf.predict_proba(x_test)[:, 1]
+
+rf_train_f1 = f1_score(y_train,rf_y_train_pred)
+rf_train_accuracy = accuracy_score(y_train,rf_y_train_pred)
+rf_train_pr_auc = average_precision_score(y_train,rf_y_train_prob)
+rf_train_confusionmatrix = confusion_matrix(y_train,rf_y_train_pred)
+
+rf_test_f1 = f1_score(y_test,rf_y_test_pred)
+rf_test_accuracy = accuracy_score(y_test,rf_y_test_pred)
+rf_test_pr_auc = average_precision_score(y_test,rf_y_test_prob)
+rf_test_confusionmatrix = confusion_matrix(y_test,rf_y_test_pred)
+
