@@ -95,3 +95,13 @@ rf_test_accuracy = accuracy_score(y_test,rf_y_test_pred)
 rf_test_pr_auc = average_precision_score(y_test,rf_y_test_prob)
 rf_test_confusionmatrix = confusion_matrix(y_test,rf_y_test_pred)
 
+xgboost = Pipeline([
+    ('preprocess',preprocessor),
+    ('model' , XGBClassifier(
+        max_depth = 4,
+        learning_rate=0.05,
+        scale_pos_weight=scale_pos_weight,
+            eval_metric='logloss',
+            random_state=42
+    ))
+])
