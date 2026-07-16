@@ -105,3 +105,21 @@ xgboost = Pipeline([
             random_state=42
     ))
 ])
+
+xgboost.fit(x_train,y_train)
+
+xgboost_y_train_pred = xgboost.predict(x_train)
+xgboost_y_test_pred = xgboost.predict(x_test)
+
+xgboost_y_train_prob = xgboost.predict_proba(x_train)[:, 1]
+xgboost_y_test_prob = xgboost.predict_proba(x_test)[:, 1]
+
+xgboost_train_f1 = f1_score(y_train,xgboost_y_train_pred)
+xgboost_train_accuracy = accuracy_score(y_train,xgboost_y_train_pred)
+xgboost_train_pr_auc = average_precision_score(y_train,xgboost_y_train_prob)
+xgboost_train_confusionmatrix = confusion_matrix(y_train,xgboost_y_train_pred)
+
+xgboost_test_f1 = f1_score(y_test,xgboost_y_test_pred)
+xgboost_test_accuracy = accuracy_score(y_test,xgboost_y_test_pred)
+xgboost_test_pr_auc = average_precision_score(y_test,xgboost_y_test_prob)
+xgboost_test_confusionmatrix = confusion_matrix(y_test,xgboost_y_test_pred)
